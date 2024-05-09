@@ -15,20 +15,20 @@ const get_calculated_properties = (state: State) => {
 
     const calculated_properties: Properties = {
         money: {
+            value: state.money,
+            change: revenue - cost,
             cost,
             revenue,
-            profit: revenue - cost,
-            value: state.money
         },
         time: {
             value: time
         },
         worker: {
+            value: workers,
+            revenue: worker.revenue,
             cost_recurrent: worker.cost_recurrent,
             cost_next_once: worker_next.cost_once,
             cost_next_recurrent: worker_next.cost_recurrent,
-            revenue: worker.revenue,
-            value: workers
         }
     }
 
@@ -73,4 +73,3 @@ const check_formula = (p: Properties, formula: string) => {
 
 export { buyWorkers, check_formula, get_calculated_properties, get_worker_info }
 
- 

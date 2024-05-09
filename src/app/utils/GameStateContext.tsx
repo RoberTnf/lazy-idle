@@ -26,7 +26,7 @@ interface Money {
     value: number,
     revenue: number,
     cost: number,
-    profit: number
+    change: number
 }
 
 
