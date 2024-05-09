@@ -4,12 +4,21 @@ import { ChangeEvent, Dispatch, ReactNode, useState } from "react";
 import { check_formula } from "../utils/Game";
 import { GameStateContext, Properties } from "../utils/GameStateContext";
 
-export default function GameController({ setWorkerFormula, className }: { setWorkerFormula: Dispatch<string>, className: string }) {
+export default function GameController(
+    { setWorkerFormula, className, setFactoryFormula }:
+        { setWorkerFormula: Dispatch<string>, setFactoryFormula: Dispatch<string>, className: string }
+) {
 
-    const [success, setSuccess] = useState(true);
-    const handle_change = (e: ChangeEvent<HTMLTextAreaElement>, p: Properties) => {
+    const [successWorker, setSuccessWorker] = useState(true);
+    const handleChangeWorker = (e: ChangeEvent<HTMLTextAreaElement>, p: Properties) => {
         setWorkerFormula(e.target.value)
-        setSuccess(check_formula(p, e.target.value))
+        setSuccessWorker(check_formula(p, e.target.value))
+    }
+
+    const [successFactory, setSuccessFactory] = useState(true);
+    const handleChangeFactory = (e: ChangeEvent<HTMLTextAreaElement>, p: Properties) => {
+        setFactoryFormula(e.target.value)
+        setSuccessFactory(check_formula(p, e.target.value))
     }
 
     return <div className={`boxed flex-auto m-2 ${className}`} >
@@ -18,7 +27,8 @@ export default function GameController({ setWorkerFormula, className }: { setWor
             (
                 <>
                     <h2 className="text">Formulas</h2>
-                    <ControlGroup name="Workers"><textarea rows={4} className={`${success ? '' : 'bg-red-950'}`} value={state.workerFormula} onChange={(e) => { handle_change(e, calculated_properties) }} /></ControlGroup>
+                    <ControlGroup name="Workers"><textarea rows={4} className={`${successWorker ? '' : 'bg-red-950'}`} value={state.workerFormula} onChange={(e) => { handleChangeWorker(e, calculated_properties) }} /></ControlGroup>
+                    <ControlGroup name="Factories"><textarea rows={4} className={`${successFactory ? '' : 'bg-red-950'}`} value={state.factoryFormula} onChange={(e) => { handleChangeFactory(e, calculated_properties) }} /></ControlGroup>
                 </>
             )
             }

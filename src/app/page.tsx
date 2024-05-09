@@ -6,8 +6,8 @@ import GameController from "./components/GameController";
 import GameOver from "./components/GameOver";
 import GameStats from "./components/GameStats";
 import Pause from "./components/Pause";
-import { buyWorkers, get_calculated_properties } from "./utils/Game";
-import { GameStateContext, StartingGameContext } from "./utils/GameStateContext";
+import { buyFactory, buyWorkers, get_calculated_properties } from "./utils/Game";
+import { GameStateContext, StartingGameContext, State } from "./utils/GameStateContext";
 
 const PlotStats = dynamic(() => import('./components/PlotStats'), {
   ssr: false,
@@ -18,15 +18,20 @@ export default function Home() {
   const [time, setTime] = useState(StartingGameContext.state.time)
   const [workerFormula, setWorkerFormula] = useState(StartingGameContext.state.workerFormula)
   const [workers, setWorkers] = useState(StartingGameContext.state.workers)
+  const [factoryFormula, setFactoryFormula] = useState(StartingGameContext.state.factoryFormula)
+  const [factories, setFactories] = useState(StartingGameContext.state.factories)
   const [pause, setPause] = useState(true)
 
-  const state = {
-    money: money,
-    workers: workers,
-    time: time,
-    setMoney: setMoney,
-    setWorkers: setWorkers,
-    workerFormula: workerFormula
+  const state: State = {
+    money,
+    workers,
+    time,
+    setMoney,
+    setWorkers,
+    workerFormula,
+    factories,
+    setFactories,
+    factoryFormula
   }
 
   const calculated_properties = get_calculated_properties(state)
@@ -49,6 +54,7 @@ export default function Home() {
     setMoney(StartingGameContext.state.money);
     setTime(StartingGameContext.state.time);
     setWorkers(StartingGameContext.state.workers);
+    setFactories(StartingGameContext.state.factories)
     setPause(true);
     setIsGameOver(false);
     setHistory([])
@@ -61,11 +67,18 @@ export default function Home() {
       setTime(time + 0.1);
       state.money += calculated_properties.money.change
 
-      const bought = buyWorkers(calculated_properties, state)
-      if (bought) { setWorkers(state.workers) }
+      {
+        const bought = buyWorkers(calculated_properties, state)
+        if (bought) { setWorkers(state.workers) }
+      }
+      {
+        const bought = buyFactory(calculated_properties, state)
+        if (bought) { setFactories(state.factories) }
+      }
+
       setMoney(state.money)
       history.push(calculated_properties)
-      setHistory(history.splice(-300))
+      setHistory(history.splice(-1000))
 
     }, 100); // increment time every 1000ms (1 second)
     return () => clearInterval(intervalId); // clean up when component unmounts
@@ -82,8 +95,8 @@ export default function Home() {
         </div>
         <GameStateContext.Provider value={context}>
           <div className="z-10 w-full font-mono text-sm flex items-stretch">
-            {!isGameOver ? <GameController setWorkerFormula={setWorkerFormula} className="flex-auto" /> : <GameOver className="flex-auto" handleReset={handleReset} />}
-            <GameStats className="w-4/12" />
+            {!isGameOver ? <GameController setWorkerFormula={setWorkerFormula} setFactoryFormula={setFactoryFormula} className="flex-1" /> : <GameOver className="flex-1" handleReset={handleReset} />}
+            <GameStats className="flex-1" />
           </div>
           <PlotStats history={history} />
         </GameStateContext.Provider>

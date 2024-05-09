@@ -11,6 +11,7 @@ export default function GameStats({ className }: { className: string }) {
                 <StatGroup obj={calculated_properties.time} name="time" />
                 <StatGroup obj={calculated_properties.money} name="money" />
                 <StatGroup obj={calculated_properties.worker} name="worker" />
+                <StatGroup obj={calculated_properties.factory} name="factory" />
             </div>
         )
         }

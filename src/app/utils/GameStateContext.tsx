@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, createContext } from "react";
+import { startingState } from "./Config";
 import { get_calculated_properties } from "./Game";
 
 interface State {
@@ -7,7 +8,10 @@ interface State {
     time: number,
     workers: number,
     setWorkers: null | Dispatch<SetStateAction<number>>,
-    workerFormula: string
+    workerFormula: string,
+    factories: number,
+    setFactories: null | Dispatch<SetStateAction<number>>,
+    factoryFormula: string
 }
 
 interface Worker {
@@ -15,6 +19,15 @@ interface Worker {
     cost_next_recurrent: number,
     cost_next_once: number,
     revenue: number,
+    value: number
+}
+
+interface Factory {
+    cost_recurrent: number,
+    cost_next_recurrent: number,
+    cost_next_once: number,
+    worker_maintenance_factor: number,
+    worker_maintenance_factor_next: number,
     value: number
 }
 
@@ -33,7 +46,8 @@ interface Money {
 interface Properties {
     time: Time,
     worker: Worker,
-    money: Money
+    money: Money,
+    factory: Factory
 }
 
 interface Context {
@@ -41,18 +55,11 @@ interface Context {
     calculated_properties: Properties
 }
 
-const state = {
-    money: 5,
-    setMoney: null,
-    workers: 1,
-    setWorkers: null,
-    time: 0,
-    workerFormula: "(money.value > worker.cost_next_once) && ((worker.cost_next_recurrent - worker.cost_recurrent) < worker.revenue)"
-}
+
 
 const StartingGameContext: Context = {
-    state,
-    calculated_properties: get_calculated_properties(state)
+    state: startingState,
+    calculated_properties: get_calculated_properties(startingState)
 }
 
 const GameStateContext = createContext(StartingGameContext);
