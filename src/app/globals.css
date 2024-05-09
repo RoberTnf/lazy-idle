@@ -2,18 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+html {
+  font-size: 24px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+:root {
+  @apply bg-slate-800 text-white;
 }
 
 body {
@@ -26,8 +20,28 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+h2 {
+  @apply text-xl font-extrabold my-2;
+}
+
+h1 {
+  @apply text-4xl font-extrabold my-2;
+}
+
+.title {
+  @apply m-4;
+}
+
+.boxed {
+  @apply border p-4 rounded-lg;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+textarea {
+  @apply bg-slate-900 text-white border border-slate-700 p-2 w-full text-sm rounded-lg;
 }
