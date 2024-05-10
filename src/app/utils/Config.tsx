@@ -21,7 +21,7 @@ const startingState = {
     setWorkers: null,
     factories: 0,
     setFactories: null,
-    factoryFormula: "(money.value > factory.cost_next_once)",
+    factoryFormula: "",
     time: 0,
     workerFormula: "(money.value > factory.cost_next_once)"
 }
