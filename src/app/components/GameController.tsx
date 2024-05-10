@@ -37,7 +37,7 @@ export default function GameController(
                     <QuestionTooltip placement="right" title="Formulas">
                         <div>
                             Input formulas to determine when a given entity is bought.
-                            Use javascript code, all units available in the Debug pane are available here,
+                            Use javascript code, all units available in the Properties pane are available here,
                             for example <br /><code>time.value &gt; 100</code> or <br /><code>worker.revenue &gt; worker.cost_next_once</code>
                         </div>
                     </QuestionTooltip>

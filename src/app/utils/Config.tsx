@@ -9,7 +9,7 @@ const workerConfig = {
 const factoryConfig = {
     worker_revenue_factor: 1.1,
     cost_recurrent_all: 4,
-    cost_once: 400,
+    cost_once: 1000,
     cost_recurrent_all_base: 1.15,
     cost_once_base: 1.1,
 }
@@ -17,7 +17,7 @@ const factoryConfig = {
 const busterConfig = {
     worker_rec_cost_factor: 0.9,
     cost_recurrent_all: 10,
-    cost_once: 1000,
+    cost_once: 50000,
     cost_recurrent_all_base: 1.15,
     cost_once_base: 1.1,
 }

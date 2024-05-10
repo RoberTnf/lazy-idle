@@ -9,7 +9,7 @@ export default function GameStats({ className, unlockedFactories, unlockedBuster
         (
             <div className={`boxed m-2 ${className}`}>
 
-                <QuestionTooltip placement="right" title="Debug">
+                <QuestionTooltip placement="right" title="Properties">
                     <div>
                         Values of all the properties available to the game for calculations. <br />
                         Use it in the formulas as <code>name.property</code>, for example <code>time.value</code>.
