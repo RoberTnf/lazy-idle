@@ -11,24 +11,27 @@ interface State {
     workerFormula: string,
     factories: number,
     setFactories: null | Dispatch<SetStateAction<number>>,
-    factoryFormula: string
+    factoryFormula: string,
+    busters: number,
+    setBusters: null | Dispatch<SetStateAction<number>>,
+    busterFormula: string,
 }
 
 interface Worker {
-    cost_recurrent: number,
-    cost_next_recurrent: number,
+    cost_recurrent_all: number,
+    cost_next_recurrent_all: number,
     cost_next_once: number,
     revenue: number,
-    value: number
+    count: number
 }
 
 interface Factory {
-    cost_recurrent: number,
-    cost_next_recurrent: number,
+    cost_recurrent_all: number,
+    cost_next_recurrent_all: number,
     cost_next_once: number,
-    worker_maintenance_factor: number,
-    worker_maintenance_factor_next: number,
-    value: number
+    worker_revenue_factor: number,
+    worker_revenue_factor_next: number,
+    count: number
 }
 
 interface Time {
@@ -42,12 +45,21 @@ interface Money {
     change: number
 }
 
+interface Buster {
+    cost_recurrent_all: number,
+    cost_next_recurrent_all: number,
+    cost_next_once: number,
+    worker_rec_cost_factor: number,
+    worker_rec_cost_factor_next: number,
+    count: number
+}
 
 interface Properties {
     time: Time,
     worker: Worker,
     money: Money,
-    factory: Factory
+    factory: Factory,
+    buster: Buster
 }
 
 interface Context {

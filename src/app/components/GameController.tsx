@@ -5,8 +5,8 @@ import { check_formula } from "../utils/Game";
 import { GameStateContext, Properties } from "../utils/GameStateContext";
 
 export default function GameController(
-    { setWorkerFormula, className, setFactoryFormula }:
-        { setWorkerFormula: Dispatch<string>, setFactoryFormula: Dispatch<string>, className: string }
+    { setWorkerFormula, className, setFactoryFormula, setBusterFormula }:
+        { setWorkerFormula: Dispatch<string>, setFactoryFormula: Dispatch<string>, className: string, setBusterFormula: Dispatch<string> }
 ) {
 
     const [successWorker, setSuccessWorker] = useState(true);
@@ -21,6 +21,12 @@ export default function GameController(
         setSuccessFactory(check_formula(p, e.target.value))
     }
 
+    const [successBuster, setSuccessBuster] = useState(true);
+    const handleChangeBuster = (e: ChangeEvent<HTMLTextAreaElement>, p: Properties) => {
+        setBusterFormula(e.target.value)
+        setSuccessBuster(check_formula(p, e.target.value))
+    }
+
     return <div className={`boxed flex-auto m-2 ${className}`} >
         <GameStateContext.Consumer>
             {({ state, calculated_properties }) =>
@@ -29,6 +35,7 @@ export default function GameController(
                     <h2 className="text">Formulas</h2>
                     <ControlGroup name="Workers"><textarea rows={4} className={`${successWorker ? '' : 'bg-red-950'}`} value={state.workerFormula} onChange={(e) => { handleChangeWorker(e, calculated_properties) }} /></ControlGroup>
                     <ControlGroup name="Factories"><textarea rows={4} className={`${successFactory ? '' : 'bg-red-950'}`} value={state.factoryFormula} onChange={(e) => { handleChangeFactory(e, calculated_properties) }} /></ControlGroup>
+                    <ControlGroup name="Busters"><textarea rows={4} className={`${successBuster ? '' : 'bg-red-950'}`} value={state.busterFormula} onChange={(e) => { handleChangeBuster(e, calculated_properties) }} /></ControlGroup>
                 </>
             )
             }

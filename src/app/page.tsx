@@ -6,7 +6,7 @@ import GameController from "./components/GameController";
 import GameOver from "./components/GameOver";
 import GameStats from "./components/GameStats";
 import Pause from "./components/Pause";
-import { buyFactory, buyWorkers, get_calculated_properties } from "./utils/Game";
+import { buyBuster, buyFactory, buyWorkers, get_calculated_properties } from "./utils/Game";
 import { GameStateContext, StartingGameContext, State } from "./utils/GameStateContext";
 
 const PlotStats = dynamic(() => import('./components/PlotStats'), {
@@ -20,6 +20,8 @@ export default function Home() {
   const [workers, setWorkers] = useState(StartingGameContext.state.workers)
   const [factoryFormula, setFactoryFormula] = useState(StartingGameContext.state.factoryFormula)
   const [factories, setFactories] = useState(StartingGameContext.state.factories)
+  const [busterFormula, setBusterFormula] = useState(StartingGameContext.state.busterFormula)
+  const [busters, setBusters] = useState(StartingGameContext.state.busters)
   const [pause, setPause] = useState(true)
 
   const state: State = {
@@ -31,7 +33,10 @@ export default function Home() {
     workerFormula,
     factories,
     setFactories,
-    factoryFormula
+    factoryFormula,
+    busters,
+    setBusters,
+    busterFormula
   }
 
   const calculated_properties = get_calculated_properties(state)
@@ -54,7 +59,8 @@ export default function Home() {
     setMoney(StartingGameContext.state.money);
     setTime(StartingGameContext.state.time);
     setWorkers(StartingGameContext.state.workers);
-    setFactories(StartingGameContext.state.factories)
+    setFactories(StartingGameContext.state.factories);
+    setBusters(StartingGameContext.state.busters)
     setPause(true);
     setIsGameOver(false);
     setHistory([])
@@ -67,14 +73,11 @@ export default function Home() {
       setTime(time + 0.1);
       state.money += calculated_properties.money.change
 
-      {
-        const bought = buyWorkers(calculated_properties, state)
-        if (bought) { setWorkers(state.workers) }
-      }
-      {
-        const bought = buyFactory(calculated_properties, state)
-        if (bought) { setFactories(state.factories) }
-      }
+
+      if (buyWorkers(calculated_properties, state)) { setWorkers(state.workers) }
+      if (buyFactory(calculated_properties, state)) { setFactories(state.factories) }
+      if (buyBuster(calculated_properties, state)) { setBusters(state.busters) }
+
 
       setMoney(state.money)
       history.push(calculated_properties)
@@ -91,11 +94,11 @@ export default function Home() {
           <div className="flex-auto">
             <h1>Lazy Idle</h1>
           </div>
-          {!isGameOver && <Pause pause={pause} setPause={setPause} />}
+          {!isGameOver && <Pause pause={pause} setPause={setPause} time={state.time} />}
         </div>
         <GameStateContext.Provider value={context}>
           <div className="z-10 w-full font-mono text-sm flex items-stretch">
-            {!isGameOver ? <GameController setWorkerFormula={setWorkerFormula} setFactoryFormula={setFactoryFormula} className="flex-1" /> : <GameOver className="flex-1" handleReset={handleReset} />}
+            {!isGameOver ? <GameController setWorkerFormula={setWorkerFormula} setFactoryFormula={setFactoryFormula} setBusterFormula={setBusterFormula} className="flex-1" /> : <GameOver className="flex-1" handleReset={handleReset} />}
             <GameStats className="flex-1" />
           </div>
           <PlotStats history={history} />
