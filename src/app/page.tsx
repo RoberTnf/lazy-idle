@@ -94,7 +94,7 @@ export default function Home() {
           <div className="flex-auto">
             <h1>Lazy Idle</h1>
           </div>
-          {!isGameOver && <Pause pause={pause} setPause={setPause} time={state.time} />}
+          {!isGameOver && <Pause pause={pause} setPause={setPause} handleReset={handleReset} time={state.time} />}
         </div>
         <GameStateContext.Provider value={context}>
           <div className="z-10 w-full font-mono text-sm flex items-stretch">
