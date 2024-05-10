@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import GameController from "./components/GameController";
 import GameOver from "./components/GameOver";
 import GameStats from "./components/GameStats";
-import Pause from "./components/Pause";
+import TopControls from "./components/Pause";
 import { buyBuster, buyFactory, buyWorkers, get_calculated_properties } from "./utils/Game";
 import { GameStateContext, StartingGameContext, State } from "./utils/GameStateContext";
 
@@ -94,7 +94,7 @@ export default function Home() {
           <div className="flex-auto">
             <h1>Lazy Idle</h1>
           </div>
-          {!isGameOver && <Pause pause={pause} setPause={setPause} handleReset={handleReset} time={state.time} />}
+          {!isGameOver && <TopControls pause={pause} setPause={setPause} handleReset={handleReset} time={state.time} />}
         </div>
         <GameStateContext.Provider value={context}>
           <div className="z-10 w-full font-mono text-sm flex items-stretch">

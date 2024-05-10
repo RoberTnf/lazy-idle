@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 
-const Pause = ({ pause, setPause, className, time, handleReset }: { pause: boolean, setPause: Dispatch<boolean>, className?: string, time: number, handleReset: () => void }) => {
+const TopControls = ({ pause, setPause, className, time, handleReset }: { pause: boolean, setPause: Dispatch<boolean>, className?: string, time: number, handleReset: () => void }) => {
     return <div className={className}>
         {/* Make sure that the classed are loaded */}
         <span className="bg-red-700" /><span className="hover:bg-red-900" /><span className="bg-green-700" /><span className="hover:bg-green-900" />
@@ -20,4 +20,4 @@ const Pause = ({ pause, setPause, className, time, handleReset }: { pause: boole
     </div>
 }
 
-export default Pause;
+export default TopControls;
