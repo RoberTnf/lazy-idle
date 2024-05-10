@@ -49,3 +49,31 @@ textarea {
 button {
   @apply text-white font-bold py-2 px-4 rounded min-w-20;
 }
+
+code {
+  @apply bg-slate-900 p-0.5 text-white rounded;
+}
+
+.hidden-custom {
+  /* visibility: hidden;
+  opacity: 0; */
+  max-height: 0px;
+  /* transition: max-height 4s ease, opacity 4s ease; */
+  opacity: 0;
+}
+
+.hidden-custom * {
+  max-height: 0px;
+  /* transition: max-height 4s ease, opacity 4s ease; */
+  opacity: 0;
+}
+
+.visible-custom {
+  /* visibility: visible; */
+  /* opacity: 1; */
+  max-height: 999px;
+  opacity: 1000;
+  transition: max-height 4s ease, opacity 1s ease;
+  transition-property: max-height, opacity;
+  transition-delay: 0s, 1s;
+}

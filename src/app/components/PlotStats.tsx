@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import Plot from "react-plotly.js";
 import { check_formula } from "../utils/Game";
 import { GameStateContext, Properties } from "../utils/GameStateContext";
+import QuestionTooltip from "./QuestionTooltip";
 
 const PlotStats = ({ history }: { history: Properties[] }) => {
     const [toPlot, setToPlot] = useState("money.value")
@@ -21,6 +22,12 @@ const PlotStats = ({ history }: { history: Properties[] }) => {
     }
 
     return <div className="boxed m-2 ">
+        <QuestionTooltip placement="right" title="Plot" className="mb-2">
+            <div>
+                Plot arbitrary formulas based on the available variables. <br />
+                Try plotting <code>money.value</code>, <code>money.change</code> or <code>worker.revenue - (worker.cost_next_recurrent_all - worker.cost_recurrent_all)</code>.
+            </div>
+        </QuestionTooltip>
         <GameStateContext.Consumer>
             {({ calculated_properties }) =>
             (

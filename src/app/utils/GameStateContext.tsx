@@ -15,6 +15,8 @@ interface State {
     busters: number,
     setBusters: null | Dispatch<SetStateAction<number>>,
     busterFormula: string,
+    unlockedFactories: boolean,
+    unlockedBusters: boolean
 }
 
 interface Worker {

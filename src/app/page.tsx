@@ -24,6 +24,9 @@ export default function Home() {
   const [busters, setBusters] = useState(StartingGameContext.state.busters)
   const [pause, setPause] = useState(true)
 
+  const [unlockedFactories, setUnlockedFactories] = useState(false)
+  const [unlockedBusters, setUnlockedBusters] = useState(false)
+
   const state: State = {
     money,
     workers,
@@ -36,7 +39,9 @@ export default function Home() {
     factoryFormula,
     busters,
     setBusters,
-    busterFormula
+    busterFormula,
+    unlockedFactories,
+    unlockedBusters
   }
 
   const calculated_properties = get_calculated_properties(state)
@@ -48,12 +53,6 @@ export default function Home() {
 
   const [isGameOver, setIsGameOver] = useState(false);
 
-  useEffect(() => {
-    if (money < 0) {
-      setIsGameOver(true);
-      setPause(true);
-    }
-  }, [money]);
 
   const handleReset = () => {
     setMoney(StartingGameContext.state.money);
@@ -83,6 +82,18 @@ export default function Home() {
       history.push(calculated_properties)
       setHistory(history.splice(-1000))
 
+      if (money < 0) {
+        setIsGameOver(true);
+        setPause(true);
+      }
+
+      if (!unlockedBusters && money > calculated_properties.buster.cost_next_once) {
+        setUnlockedBusters(true)
+      }
+      if (!unlockedFactories && money > calculated_properties.factory.cost_next_once) {
+        setUnlockedFactories(true)
+      }
+
     }, 100); // increment time every 1000ms (1 second)
     return () => clearInterval(intervalId); // clean up when component unmounts
   });
@@ -98,8 +109,8 @@ export default function Home() {
         </div>
         <GameStateContext.Provider value={context}>
           <div className="z-10 w-full font-mono text-sm flex items-stretch">
-            {!isGameOver ? <GameController setWorkerFormula={setWorkerFormula} setFactoryFormula={setFactoryFormula} setBusterFormula={setBusterFormula} className="flex-1" /> : <GameOver className="flex-1" handleReset={handleReset} />}
-            <GameStats className="flex-1" />
+            {!isGameOver ? <GameController setWorkerFormula={setWorkerFormula} setFactoryFormula={setFactoryFormula} setBusterFormula={setBusterFormula} unlockedFactories={unlockedFactories} unlockedBusters={unlockedBusters} className="flex-1" /> : <GameOver className="flex-1" handleReset={handleReset} />}
+            <GameStats className="flex-1" unlockedFactories={unlockedFactories} unlockedBusters={unlockedBusters} />
           </div>
           <PlotStats history={history} />
         </GameStateContext.Provider>

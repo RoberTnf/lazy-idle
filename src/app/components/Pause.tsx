@@ -10,7 +10,7 @@ const TopControls = ({ pause, setPause, className, time, handleReset }: { pause:
         >
             Reset
         </button>
-
+    
         <button
             onClick={() => { setPause(!pause) }}
             className={`bg-${!pause ? 'red' : 'green'}-700 hover:bg-${!pause ? 'red' : 'green'}-900  min-w-24`}

@@ -1,18 +1,26 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { GameStateContext } from "../utils/GameStateContext";
+import QuestionTooltip from "./QuestionTooltip";
 
-export default function GameStats({ className }: { className: string }) {
+export default function GameStats({ className, unlockedFactories, unlockedBusters }: { className: string, unlockedFactories: boolean, unlockedBusters: boolean }) {
     return <GameStateContext.Consumer>
         {({ calculated_properties }) =>
         (
             <div className={`boxed m-2 ${className}`}>
-                <h2>Stats</h2>
+
+                <QuestionTooltip placement="right" title="Debug">
+                    <div>
+                        Values of all the properties available to the game for calculations. <br />
+                        Use it in the formulas as <code>name.property</code>, for example <code>time.value</code>.
+                    </div>
+                </QuestionTooltip>
+
                 <StatGroup obj={calculated_properties.time} name="time" />
                 <StatGroup obj={calculated_properties.money} name="money" />
                 <StatGroup obj={calculated_properties.worker} name="worker" />
-                <StatGroup obj={calculated_properties.factory} name="factory" />
-                <StatGroup obj={calculated_properties.buster} name="buster" />
+                <StatGroup obj={calculated_properties.factory} className={unlockedFactories ? "visible-custom" : "hidden-custom"} name="factory" />
+                <StatGroup obj={calculated_properties.buster} className={unlockedBusters ? "visible-custom" : "hidden-custom"} name="buster" />
             </div>
         )
         }
@@ -28,9 +36,9 @@ function Stat(props: { name: string, value: string }) {
 }
 
 
-function StatGroup({ obj, name }: { obj: Object, name: string }) {
+function StatGroup({ obj, name, className }: { obj: Object, name: string, className?: string }) {
     return (
-        <Disclosure as="div" className="py-2" defaultOpen={true}>
+        <Disclosure as="div" className={`py-2 ${className}`} defaultOpen={true}>
             <DisclosureButton className="group flex w-full items-center justify-between p-0 py-2">
                 <span className="text-lg font-extrabold text-white group-data-[hover]:text-white/80">
                     {name}
