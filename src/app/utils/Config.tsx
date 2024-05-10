@@ -23,7 +23,7 @@ const startingState = {
     setFactories: null,
     factoryFormula: "",
     time: 0,
-    workerFormula: "(money.value > factory.cost_next_once)"
+    workerFormula: "(money.value > worker.cost_next_once)"
 }
 
 export { factoryConfig, startingState, workerConfig }

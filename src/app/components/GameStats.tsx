@@ -36,7 +36,7 @@ function StatGroup({ obj, name }: { obj: Object, name: string }) {
                 </span>
                 <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
             </DisclosureButton>
-            <DisclosurePanel className="mt-2 text-sm/5">
+            <DisclosurePanel className="mt-2 text-xs">
                 {Object.keys(obj).map((key) => (
                     // @ts-ignore
                     <Stat name={key} value={obj[key].toPrecision(4)} key={key} />
