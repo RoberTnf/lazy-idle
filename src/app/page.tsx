@@ -9,7 +9,7 @@ import GameStats from "./components/GameStats";
 import TopControls from "./components/Pause";
 import Tutorial from "./components/Tutorial";
 import Victory from "./components/Victory";
-import { TIME_CONSTANT } from "./utils/Config";
+import { MONEY_VICTORY, TIME_CONSTANT } from "./utils/Config";
 import { get_calculated_properties } from "./utils/Game";
 import { GameStateContext, StartingGameContext, State } from "./utils/GameStateContext";
 
@@ -25,6 +25,10 @@ const fromStorage = (key: string, default_value: string) => {
   }
   return default_value
 }
+const workerWorker = new Worker(new URL('utils/worker.tsx', import.meta.url), { type: 'module' })
+const busterWorker = new Worker(new URL('utils/worker.tsx', import.meta.url), { type: 'module' })
+const factoryWorker = new Worker(new URL('utils/worker.tsx', import.meta.url), { type: 'module' })
+
 
 export default function Home() {
   const [money, setMoney] = useState(StartingGameContext.state.money);
@@ -46,9 +50,6 @@ export default function Home() {
 
   const [isDisclaimerAccepted, setDisclaimerAccepted] = useState(process.env.NODE_ENV ? true : false)
 
-  const workerWorker = new Worker(new URL('utils/worker.tsx', import.meta.url), { type: 'module' })
-  const busterWorker = new Worker(new URL('utils/worker.tsx', import.meta.url), { type: 'module' })
-  const factoryWorker = new Worker(new URL('utils/worker.tsx', import.meta.url), { type: 'module' })
 
   const setWorkerFormula = (t: string) => {
     setWorkerFormula_(t);
@@ -116,6 +117,7 @@ export default function Home() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (pause) { return };
+      if (money > MONEY_VICTORY) { setIsVictory(true); return }
       workerWorker.postMessage([calculated_properties, workerFormula])
       factoryWorker.postMessage([calculated_properties, factoryFormula])
       busterWorker.postMessage([calculated_properties, busterFormula])

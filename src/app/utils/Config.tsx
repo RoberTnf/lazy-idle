@@ -53,7 +53,7 @@ const startingState = {
 }
 
 const TIME_CONSTANT = (process.env.NODE_ENV === "development") ? 1 : 1
-const MONEY_VICTORY = 10
+const MONEY_VICTORY = 1e8
 
 
 export { MONEY_VICTORY, TIME_CONSTANT, busterConfig, factoryConfig, startingState, workerConfig }

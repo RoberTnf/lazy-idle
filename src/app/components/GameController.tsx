@@ -3,15 +3,15 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import { Properties, State } from "../utils/GameStateContext";
 import QuestionTooltip from "./QuestionTooltip";
+const workerWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
+const factoryWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
+const busterWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
+const customWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
 
 
 export default function GameController(
     { state, className, calculated_properties }: { state: State, className: string, calculated_properties: Properties }
 ) {
-    const workerWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
-    const factoryWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
-    const busterWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
-    const customWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
 
     const { setWorkerFormula, setFactoryFormula, setBusterFormula, unlockedFactories, unlockedBusters, shouldBuyBuster, shouldBuyFactory, shouldBuyWorker, setShouldBuyBuster, setShouldBuyFactory, setShouldBuyWorker } = state
     const [customFormula, setCustomFormula] = useState("money.value")
@@ -47,6 +47,7 @@ export default function GameController(
         customWorker.postMessage([p, e.target.value])
     }
     const handleChangeWorker = (e: ChangeEvent<HTMLTextAreaElement>, p: Properties) => {
+        console.log("change")
         setWorkerFormula && setWorkerFormula(e.target.value)
         workerWorker.postMessage([p, e.target.value])
     }
