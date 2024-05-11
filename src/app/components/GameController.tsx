@@ -1,23 +1,22 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { ChangeEvent, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, ReactNode, useEffect, useMemo, useState } from "react";
 import { Properties, State } from "../utils/GameStateContext";
 import QuestionTooltip from "./QuestionTooltip";
-const workerWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
-const factoryWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
-const busterWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
-const customWorker = new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })
 
 
 export default function GameController(
     { state, className, calculated_properties }: { state: State, className: string, calculated_properties: Properties }
 ) {
+    const workerWorker = useMemo(() => (new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })), [])
+    const factoryWorker = useMemo(() => (new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })), [])
+    const busterWorker = useMemo(() => (new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })), [])
+    const customWorker = useMemo(() => (new Worker(new URL('../utils/worker.tsx', import.meta.url), { type: 'module' })), [])
 
     const { setWorkerFormula, setFactoryFormula, setBusterFormula, unlockedFactories, unlockedBusters, shouldBuyBuster, shouldBuyFactory, shouldBuyWorker, setShouldBuyBuster, setShouldBuyFactory, setShouldBuyWorker } = state
     const [customFormula, setCustomFormula] = useState("money.value")
     const [customResult, setCustomResult] = useState({ success: true, cond: true })
     const [successCustom, setSuccessCustom] = useState(true);
-
 
 
     workerWorker.onmessage = ({ data }) => {
