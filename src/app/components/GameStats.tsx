@@ -12,7 +12,7 @@ export default function GameStats({ className, unlockedFactories, unlockedBuster
                 <QuestionTooltip placement="right" title="Properties">
                     <div>
                         Values of all the properties available to the game for calculations. <br />
-                        Use it in the formulas as <code>name.property</code>, for example <code>time.value</code>.
+                        Use it in the formulas as, for example, <code>time.iterations</code>.
                     </div>
                 </QuestionTooltip>
 

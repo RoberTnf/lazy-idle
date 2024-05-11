@@ -2,28 +2,41 @@ import { Dispatch, SetStateAction, createContext } from "react";
 import { startingState } from "./Config";
 import { get_calculated_properties } from "./Game";
 
+interface ShouldType {
+    success: boolean, cond: boolean
+}
 interface State {
     money: number,
     setMoney: null | Dispatch<SetStateAction<number>>,
     time: number,
     workers: number,
     setWorkers: null | Dispatch<SetStateAction<number>>,
-    workerFormula: string,
     factories: number,
     setFactories: null | Dispatch<SetStateAction<number>>,
-    factoryFormula: string,
     busters: number,
     setBusters: null | Dispatch<SetStateAction<number>>,
+    workerFormula: string,
+    factoryFormula: string,
     busterFormula: string,
+    setWorkerFormula: null | ((arg0: string) => void),
+    setFactoryFormula: null | ((arg0: string) => void),
+    setBusterFormula: null | ((arg0: string) => void),
     unlockedFactories: boolean,
-    unlockedBusters: boolean
+    unlockedBusters: boolean,
+    shouldBuyWorker: ShouldType,
+    shouldBuyFactory: ShouldType,
+    shouldBuyBuster: ShouldType,
+    setShouldBuyWorker: null | Dispatch<SetStateAction<ShouldType>>,
+    setShouldBuyFactory: null | Dispatch<SetStateAction<ShouldType>>,
+    setShouldBuyBuster: null | Dispatch<SetStateAction<ShouldType>>,
+    ups: number
 }
 
 interface Worker {
     cost_recurrent_all: number,
     cost_next_recurrent_all: number,
     cost_next_once: number,
-    revenue: number,
+    base_revenue: number,
     count: number
 }
 
@@ -37,7 +50,8 @@ interface Factory {
 }
 
 interface Time {
-    value: number
+    iterations: number,
+    iterations_per_s: number
 }
 
 interface Money {

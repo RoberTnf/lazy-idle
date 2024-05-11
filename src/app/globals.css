@@ -51,7 +51,7 @@ button {
 }
 
 code {
-  @apply bg-slate-900 p-0.5 text-white rounded;
+  @apply bg-gray-950 p-0.5 text-white rounded-sm whitespace-nowrap;
 }
 
 .hidden-custom {
@@ -60,6 +60,8 @@ code {
   max-height: 0px;
   /* transition: max-height 4s ease, opacity 4s ease; */
   opacity: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .hidden-custom * {
@@ -73,7 +75,12 @@ code {
   /* opacity: 1; */
   max-height: 999px;
   opacity: 1000;
-  transition: max-height 4s ease, opacity 1s ease;
-  transition-property: max-height, opacity;
-  transition-delay: 0s, 1s;
+  transition: max-height 2s ease, opacity 2s ease, margin 2s ease,
+    padding 2s ease;
+  transition-property: max-height, opacity, marging, padding;
+  transition-delay: 0s, 0s, 0s, 0s;
+}
+
+a {
+  @apply underline;
 }
