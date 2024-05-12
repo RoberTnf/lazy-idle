@@ -49,7 +49,7 @@ export default function MainGame() {
     const [ups, setUps] = useState(0)
     const [isVictory, setIsVictory] = useState(false)
 
-    const [isDisclaimerAccepted, setDisclaimerAccepted] = useState(process.env.NODE_ENV ? true : false)
+    const [isDisclaimerAccepted, setDisclaimerAccepted] = useState(false)
 
 
     const setWorkerFormula = (t: string) => {
