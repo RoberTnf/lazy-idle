@@ -7,7 +7,7 @@ function Victory({ state, isVictory, handleReset }: { state: State, isVictory: b
         <div className="mx-auto text-center my-32">
             <h1>🎊 Victory! 🎊</h1>
 
-            You reached <code>money.value === {MONEY_VICTORY}</code><br />in <code>time.iterations === {state.time.toFixed(1)}</code>.
+            You reached <code>money.value === {MONEY_VICTORY}</code><br />in <code>time.iterations === {state.time}</code>.
             <br /><br />
             Can you do it faster?
             <br /><br />

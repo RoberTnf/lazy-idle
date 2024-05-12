@@ -105,7 +105,7 @@ function ControlGroup({ name, children, tooltip, className, cond }: { name: stri
         <Disclosure as="div" className={`py-2 ${className}`} defaultOpen={true}>
             <DisclosureButton className="group flex w-full items-center justify-between p-0 py-2 gap-4">
                 <QuestionTooltip placement="right" title={name} className="grow">{tooltip}</QuestionTooltip>
-                <code className="p-1 min-w-32">{r}</code>
+                <code className={`p-1 min-w-32 border-2 rounded ${cond ? "border-green-500" : "border-red-500"}`}>{r}</code>
                 <ChevronDownIcon className="size-5 fill-white/60 group-data-[hover]:fill-white/50 group-data-[open]:rotate-180" />
             </DisclosureButton>
             <DisclosurePanel className="mt-2 text-sm/5">

@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
-import { MONEY_VICTORY, TIME_CONSTANT } from "../utils/Config";
+import { MONEY_VICTORY, TIME_CONSTANT, busterConfig, factoryConfig } from "../utils/Config";
 import { get_calculated_properties } from "../utils/Game";
 import { GameStateContext, StartingGameContext, State } from "../utils/GameStateContext";
 import Disclaimer from "./Diclaimer";
@@ -117,6 +117,12 @@ export default function MainGame() {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
+            if (!unlockedBusters && money >= busterConfig.cost_once) {
+                setUnlockedBusters(true)
+            }
+            if (!unlockedFactories && money >= factoryConfig.cost_once) {
+                setUnlockedFactories(true)
+            }
             if (pause) { return };
             if (money > MONEY_VICTORY) { setIsVictory(true); return }
             workerWorker.postMessage([calculated_properties, workerFormula])
@@ -126,7 +132,7 @@ export default function MainGame() {
             const time_since_last = (newTime - lastTime) / 1000
             lastTime = newTime
             setUps(1 / time_since_last)
-            setTime(time + (0.1 * TIME_CONSTANT));
+            setTime(time + (TIME_CONSTANT));
             state.money += calculated_properties.money.change * TIME_CONSTANT
 
 
@@ -156,12 +162,7 @@ export default function MainGame() {
                 setPause(true);
             }
 
-            if (!unlockedBusters && money > calculated_properties.buster.cost_next_once) {
-                setUnlockedBusters(true)
-            }
-            if (!unlockedFactories && money > calculated_properties.factory.cost_next_once) {
-                setUnlockedFactories(true)
-            }
+
         }, 100); // increment time every 1000ms (1 second)
         return () => clearInterval(intervalId); // clean up when component unmounts
     });
