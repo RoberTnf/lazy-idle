@@ -82,5 +82,5 @@ code {
 }
 
 a {
-  @apply underline text-white hover:text-white/80;
+  @apply underline hover:text-white/80;
 }
