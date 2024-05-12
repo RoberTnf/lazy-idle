@@ -117,12 +117,6 @@ export default function MainGame() {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            if (!unlockedBusters && money >= busterConfig.cost_once) {
-                setUnlockedBusters(true)
-            }
-            if (!unlockedFactories && money >= factoryConfig.cost_once) {
-                setUnlockedFactories(true)
-            }
             if (pause) { return };
             if (money > MONEY_VICTORY) { setIsVictory(true); return }
             workerWorker.postMessage([calculated_properties, workerFormula])
@@ -135,6 +129,12 @@ export default function MainGame() {
             setTime(time + (TIME_CONSTANT));
             state.money += calculated_properties.money.change * TIME_CONSTANT
 
+            if (!unlockedBusters && money >= busterConfig.cost_once) {
+                setUnlockedBusters(true)
+            }
+            if (!unlockedFactories && money >= factoryConfig.cost_once) {
+                setUnlockedFactories(true)
+            }
 
             if (shouldBuyWorker.cond && (state.money > calculated_properties.worker.cost_next_once)) {
                 state.workers += 1

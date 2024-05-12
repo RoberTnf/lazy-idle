@@ -39,13 +39,14 @@ function Tutorial({ unlockedFactories, unlockedBusters }: { unlockedFactories: b
                 {
                     unlockedFactories ?
                         (<div>
-                            <h2>Factories</h2>
+                            <h2 className="mt-4">Factories</h2>
                             <div>
-                                They increase <code > worker.base_revenue</code> efficiency by <code > factory.worker_revenue_factor</code>.
+                                They increase <code > worker.base_revenue</code> efficiency by <code > factory.worker_revenue_factor</code>.<br />
                             </div >
                             {
                                 unlockedBusters ?
                                     <div>
+                                        <h2 className="mt-4">Union Busters</h2>
                                         They reduce <code>worker.cost_recurrent_all</code> by <code>buster.worker_rec_cost_factor</code>.
                                     </div> :
                                     <div><h2 className="mt-4">Union Busters</h2><div>Unlock union busters at <code>money.value === {busterConfig.cost_once}</code>.</div></div>
